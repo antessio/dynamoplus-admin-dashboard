@@ -15,6 +15,9 @@ import ProfileLayout from '@app/components/profile/ProfileLayout';
 import RequireAuth from '@app/components/router/RequireAuth';
 import { withLoading } from '@app/hocs/withLoading.hoc';
 import NftDashboardPage from '@app/pages/DashboardPages/NftDashboardPage';
+import DynamoPlusPage from '@app/pages/DashboardPages/dynamoplus/DynamoPlusPage';
+import CollectionsPage from '@app/pages/DashboardPages/dynamoplus/CollectionsPage';
+import CollectionDetailPage from '@app/pages/DashboardPages/dynamoplus/CollectionDetailPage';
 import MedicalDashboardPage from '@app/pages/DashboardPages/MedicalDashboardPage';
 
 const NewsFeedPage = React.lazy(() => import('@app/pages/NewsFeedPage'));
@@ -63,7 +66,7 @@ const Logout = React.lazy(() => import('./Logout'));
 
 export const NFT_DASHBOARD_PATH = '/';
 export const MEDICAL_DASHBOARD_PATH = '/medical-dashboard';
-
+export const DYNAMOPLUS_DASHBOARD_PATH = 'dynamoplus'
 const MedicalDashboard = withLoading(MedicalDashboardPage);
 const NftDashboard = withLoading(NftDashboardPage);
 const NewsFeed = withLoading(NewsFeedPage);
@@ -130,8 +133,14 @@ export const AppRouter: React.FC = () => {
   return (
     <BrowserRouter>
       <Routes>
+        <Route path={DYNAMOPLUS_DASHBOARD_PATH} element={protectedLayout}>
+          <Route index element={<DynamoPlusPage />} />
+          <Route path="collections" element={<CollectionsPage />} />
+          <Route path="collections/:name" element={<CollectionDetailPage />} />
+        </Route>
         <Route path={NFT_DASHBOARD_PATH} element={protectedLayout}>
-          <Route index element={<NftDashboard />} />
+          
+          
           <Route path={MEDICAL_DASHBOARD_PATH} element={<MedicalDashboard />} />
           <Route path="apps">
             <Route path="feed" element={<NewsFeed />} />

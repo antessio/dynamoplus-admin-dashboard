@@ -4,7 +4,13 @@ export interface Tag {
   value: string;
   priority: Priority;
 }
-
+export interface CollectionTableRow{
+  name: string;
+  id_key: string;
+  ordering_key?: string
+  auto_generated_id?:boolean
+  attributes: String[]
+}
 export interface BasicTableRow {
   key: number;
   name: string;
@@ -17,6 +23,12 @@ export interface Pagination {
   current?: number;
   pageSize?: number;
   total?: number;
+}
+
+export interface InfinitePagination{
+  lastKey?: string
+  limit?: number
+  has_more: boolean
 }
 
 export interface BasicTableData {
