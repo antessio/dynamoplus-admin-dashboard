@@ -7,7 +7,7 @@ import { Input } from '@app/components/common/inputs/Input/Input';
 import { Select, Option } from '@app/components/common/selects/Select/Select';
 import { Button } from '@app/components/common/buttons/Button/Button';
 import { notificationController } from '@app/controllers/notificationController';
-import * as S from './DynamicForm.styles';
+import * as S from './CreateCollectionForm.styles';
 
 interface Sight {
   [key: string]: string[];
