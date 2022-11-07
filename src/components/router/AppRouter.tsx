@@ -66,7 +66,7 @@ const Logout = React.lazy(() => import('./Logout'));
 
 export const NFT_DASHBOARD_PATH = '/';
 export const MEDICAL_DASHBOARD_PATH = '/medical-dashboard';
-export const DYNAMOPLUS_DASHBOARD_PATH = 'dynamoplus'
+export const DYNAMOPLUS_DASHBOARD_PATH = 'dynamoplus';
 const MedicalDashboard = withLoading(MedicalDashboardPage);
 const NftDashboard = withLoading(NftDashboardPage);
 const NewsFeed = withLoading(NewsFeedPage);
@@ -139,8 +139,6 @@ export const AppRouter: React.FC = () => {
           <Route path="collections/:name" element={<CollectionDetailPage />} />
         </Route>
         <Route path={NFT_DASHBOARD_PATH} element={protectedLayout}>
-          
-          
           <Route path={MEDICAL_DASHBOARD_PATH} element={<MedicalDashboard />} />
           <Route path="apps">
             <Route path="feed" element={<NewsFeed />} />

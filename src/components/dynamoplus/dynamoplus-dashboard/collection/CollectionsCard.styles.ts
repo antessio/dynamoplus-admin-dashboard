@@ -10,7 +10,6 @@ export const ButtonGroup = styled.div`
   }
 `;
 
-
 export const Title = styled(Typography.Title)`
   &.ant-typography {
     margin-bottom: 0;

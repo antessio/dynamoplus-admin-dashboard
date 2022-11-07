@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import { Header } from '../../../header/Header';
 import MainSider from '../sider/MainSider/MainSider';
 import MainContent from '../MainContent/MainContent';
 import { MainHeader } from '../MainHeader/MainHeader';
@@ -25,9 +24,7 @@ const MainLayout: React.FC = () => {
     <S.LayoutMaster>
       <MainSider isCollapsed={siderCollapsed} setCollapsed={setSiderCollapsed} />
       <S.LayoutMain>
-        <MainHeader isTwoColumnsLayout={isTwoColumnsLayout}>
-        
-        </MainHeader>
+        <MainHeader isTwoColumnsLayout={isTwoColumnsLayout}></MainHeader>
         <MainContent id="main-content" $isTwoColumnsLayout={isTwoColumnsLayout}>
           <div>
             <Outlet />
