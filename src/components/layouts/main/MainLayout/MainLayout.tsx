@@ -14,8 +14,6 @@ const MainLayout: React.FC = () => {
   const { isDesktop } = useResponsive();
   const location = useLocation();
 
-  const toggleSider = () => setSiderCollapsed(!siderCollapsed);
-
   useEffect(() => {
     setIsTwoColumnsLayout([MEDICAL_DASHBOARD_PATH, NFT_DASHBOARD_PATH].includes(location.pathname) && isDesktop);
   }, [location.pathname, isDesktop]);

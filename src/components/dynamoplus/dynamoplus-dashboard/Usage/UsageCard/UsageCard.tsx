@@ -2,13 +2,9 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { Col, Row } from 'antd';
 import { UsageInfo } from '../UsageInfo/UsageInfo';
-import { StatisticsProgress } from '../UsageProgress/UsageProgress';
 import { useResponsive } from '@app/hooks/useResponsive';
 import { StatisticColor } from '@app/constants/config/statistics';
 import * as S from './UsageCard.styles';
-import { themeObject } from '@app/styles/themes/themeVariables';
-import { useAppSelector } from '@app/hooks/reduxHooks';
-
 interface DynamoPlusUsageCardProps {
   name: string;
   value: number;
@@ -17,7 +13,6 @@ interface DynamoPlusUsageCardProps {
 }
 
 export const UsageCard: React.FC<DynamoPlusUsageCardProps> = ({ name, value, color, Icon }) => {
-  const theme = useAppSelector((state) => state.theme.theme);
   const { isTablet: isTabletOrHigher } = useResponsive();
 
   const { t } = useTranslation();

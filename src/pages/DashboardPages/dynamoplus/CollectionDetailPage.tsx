@@ -39,7 +39,7 @@ const CollectionDetailPage: React.FC = () => {
         });
       });
     }
-  }, []);
+  }, [name]);
 
   const desktopLayout = (
     <Row gutter={[30, 0]}>
@@ -63,8 +63,8 @@ const CollectionDetailPage: React.FC = () => {
         <Space />
         <Card title={t('dynamoplus.collection.documents')}>
           <S.ScrollWrapper id="documents">
-            {documents && collection && collection.id_key && (
-              <CollectionDocuments collectionIdKey={collection.id_key} documents={documents} />
+            {documents && collection && collection.idKey && (
+              <CollectionDocuments collectionIdKey={collection.idKey} documents={documents} />
             )}
           </S.ScrollWrapper>
         </Card>

@@ -8,115 +8,172 @@ import { Select, Option } from '@app/components/common/selects/Select/Select';
 import { Button } from '@app/components/common/buttons/Button/Button';
 import { notificationController } from '@app/controllers/notificationController';
 import * as S from './CreateCollectionForm.styles';
+import { Modal } from '@app/components/common/Modal/Modal';
+import { CollectionAttributeType, createCollection } from '@app/api/dynamoplus/mocks/system.api';
 
-interface Sight {
-  [key: string]: string[];
+interface CreateCollectionFormProps {
+  isVisible: boolean;
+  onSubmitted: () => void;
+  onCanceled: () => void;
 }
 
-export const DynamicForm: React.FC = () => {
-  const [isFieldsChanged, setFieldsChanged] = useState(false);
+export const CreateCollectionForm: React.FC<CreateCollectionFormProps> = (props) => {
   const [isLoading, setLoading] = useState(false);
   const [form] = BaseButtonsForm.useForm();
   const { t } = useTranslation();
+  const isModalVisible = props.isVisible;
 
-  const areas = [
-    { label: t('forms.dynamicFormLabels.beijing'), value: 'Beijing' },
-    { label: t('forms.dynamicFormLabels.shanghai'), value: 'Shanghai' },
-  ];
+  const onSubmit = props.onSubmitted;
+  const onCancel = props.onCanceled;
 
-  const sights: Sight = {
-    Beijing: [t('forms.dynamicFormLabels.tiananmen'), t('forms.dynamicFormLabels.greatWall')],
-    Shanghai: [t('forms.dynamicFormLabels.orientalPearl'), t('forms.dynamicFormLabels.theBund')],
-  };
-
-  const onFinish = (values = {}) => {
+  const onFinish = ({
+    collectionName,
+    idKey,
+    orderingKey,
+    attributes,
+  }: {
+    collectionName: string;
+    idKey: string;
+    orderingKey: string;
+    attributes: { attributeName: string; attributeType: CollectionAttributeType }[];
+  }) => {
     setLoading(true);
     setTimeout(() => {
       setLoading(false);
-      setFieldsChanged(false);
+      const collectionAttribtues =attributes? attributes.map((a) => {
+        return {
+          name: a.attributeName,
+          type: a.attributeType,
+        };
+      }):[];
+      createCollection({
+        name: collectionName,
+        orderingKey: orderingKey,
+        idKey: idKey,
+        attributes: collectionAttribtues,
+      });
       notificationController.success({ message: t('common.success') });
-      console.log(values);
     }, 1000);
   };
 
-  const handleChange = () => {
-    form.setFieldsValue({ sights: [] });
-  };
+  const attributeTypes = [
+    CollectionAttributeType.ARRAY,
+    CollectionAttributeType.BOOLEAN,
+    CollectionAttributeType.DATE,
+    CollectionAttributeType.NUMBER,
+    CollectionAttributeType.OBJECT,
+    CollectionAttributeType.STRING,
+  ];
 
   return (
     <BaseButtonsForm
       form={form}
+      isFieldsChanged={false}
       name="dynamicForm"
-      isFieldsChanged={isFieldsChanged}
       loading={isLoading}
       onFinish={onFinish}
       autoComplete="off"
-      onFieldsChange={() => setFieldsChanged(true)}
     >
-      <BaseButtonsForm.Item
-        name="area"
-        label={t('forms.dynamicFormLabels.area')}
-        rules={[{ required: true, message: t('forms.dynamicFormLabels.areaError') }]}
+      <Modal
+        title={t('dynamoplus.collection.modals.createCollection.title')}
+        centered
+        visible={isModalVisible}
+        onCancel={() => onCancel()}
+        size="large"
+        footer={[
+          <Button key="back" onClick={() => onCancel()}>
+            {t('dynamoplus.collection.modals.createCollection.cancel')}
+          </Button>,
+          <Button
+            key="ok"
+            onClick={() => {
+              onFinish(form.getFieldsValue());
+              form.resetFields();
+              onSubmit();
+            }}
+          >
+            {t('dynamoplus.collection.modals.createCollection.submit')}
+          </Button>,
+        ]}
       >
-        <Select options={areas} onChange={handleChange} />
-      </BaseButtonsForm.Item>
-      <BaseButtonsForm.List name="sights">
-        {(fields, { add, remove }) => (
-          <>
-            {fields.map((field) => (
-              <Row key={field.key} wrap={false} gutter={[10, 10]} align="middle" justify="space-between">
-                <Col span={12}>
-                  <BaseButtonsForm.Item
-                    noStyle
-                    // eslint-disable-next-line
-                    shouldUpdate={(prevValues: any, curValues: any) =>
-                      prevValues.area !== curValues.area || prevValues.sights !== curValues.sights
-                    }
-                  >
-                    {() => (
-                      <BaseButtonsForm.Item
-                        {...field}
-                        label={t('forms.dynamicFormLabels.sight')}
-                        name={[field.name, 'sight']}
-                        fieldKey={[field.key, 'sight']}
-                        rules={[{ required: true, message: t('forms.dynamicFormLabels.sightError') }]}
-                      >
-                        <Select disabled={!form.getFieldValue('area')}>
-                          {(sights[form.getFieldValue('area')] || []).map((item) => (
-                            <Option key={item} value={item}>
-                              {item}
-                            </Option>
-                          ))}
-                        </Select>
-                      </BaseButtonsForm.Item>
-                    )}
-                  </BaseButtonsForm.Item>
-                </Col>
-                <Col span={12}>
-                  <BaseButtonsForm.Item
-                    {...field}
-                    label={t('forms.dynamicFormLabels.price')}
-                    name={[field.name, 'price']}
-                    fieldKey={[field.key, 'price']}
-                    rules={[{ required: true, message: t('forms.dynamicFormLabels.priceError') }]}
-                  >
-                    <S.Wrapper>
-                      <Input />
-                      <S.RemoveBtn onClick={() => remove(field.name)} />
-                    </S.Wrapper>
-                  </BaseButtonsForm.Item>
-                </Col>
-              </Row>
-            ))}
+        <BaseButtonsForm.Item
+          label={t('dynamoplus.collection.createForm.collectionName')}
+          name="collectionName"
+          rules={[{ required: true, message: t('dynamoplus.collection.createForm.collectionNameError') }]}
+        >
+          <Input />
+        </BaseButtonsForm.Item>
+        <BaseButtonsForm.Item
+          label={t('dynamoplus.collection.createForm.idKey')}
+          name="idKey"
+          rules={[{ required: true, message: t('dynamoplus.collection.createForm.idKeyError') }]}
+        >
+          <Input />
+        </BaseButtonsForm.Item>
+        <BaseButtonsForm.Item label={t('dynamoplus.collection.createForm.orderingKey')} name="orderingKey">
+          <Input />
+        </BaseButtonsForm.Item>
+        <BaseButtonsForm.List name="attributes">
+          {(fields, { add, remove }) => (
+            <>
+              {fields.map((field) => (
+                <Row key={field.key} wrap={false} gutter={[10, 10]} align="middle" justify="space-between">
+                  <Col span={6}>
+                    <BaseButtonsForm.Item
+                      noStyle
+                      // eslint-disable-next-line
+                      shouldUpdate={(prevValues: any, curValues: any) =>
+                        prevValues.attribute_name !== curValues.attribute_name ||
+                        prevValues.attribute_type !== curValues.attribute_type
+                      }
+                    >
+                      {() => (
+                        <BaseButtonsForm.Item
+                          {...field}
+                          label={t('dynamoplus.collection.createForm.attributes')}
+                          name={[field.name, 'attributeType']}
+                          fieldKey={[field.key, 'attributeType']}
+                          rules={[
+                            { required: true, message: t('dynamoplus.collection.createForm.attributeTypeError') },
+                          ]}
+                        >
+                          <Select>
+                            {attributeTypes.map((item) => (
+                              <Option key={item} value={item}>
+                                {item}
+                              </Option>
+                            ))}
+                          </Select>
+                        </BaseButtonsForm.Item>
+                      )}
+                    </BaseButtonsForm.Item>
+                  </Col>
+                  <Col span={12}>
+                    <BaseButtonsForm.Item
+                      {...field}
+                      label={t('dynamoplus.collection.createForm.attributes')}
+                      name={[field.name, 'attributeName']}
+                      fieldKey={[field.key, 'attributeName']}
+                      rules={[{ required: true, message: t('dynamoplus.collection.createForm.attributeNameError') }]}
+                    >
+                      <S.Wrapper>
+                        <Input />
+                        <S.RemoveBtn onClick={() => remove(field.name)} />
+                      </S.Wrapper>
+                    </BaseButtonsForm.Item>
+                  </Col>
+                </Row>
+              ))}
 
-            <BaseButtonsForm.Item>
-              <Button type="dashed" onClick={() => add()} block icon={<PlusOutlined />}>
-                {t('forms.dynamicFormLabels.addSights')}
-              </Button>
-            </BaseButtonsForm.Item>
-          </>
-        )}
-      </BaseButtonsForm.List>
+              <BaseButtonsForm.Item>
+                <Button type="dashed" onClick={() => add()} block icon={<PlusOutlined />}>
+                  {t('dynamoplus.collection.createForm.addAttribute')}
+                </Button>
+              </BaseButtonsForm.Item>
+            </>
+          )}
+        </BaseButtonsForm.List>
+      </Modal>
     </BaseButtonsForm>
   );
 };

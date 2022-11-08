@@ -1,5 +1,4 @@
 import React from 'react';
-import { useTranslation } from 'react-i18next';
 import { Tree } from 'antd';
 import { DatabaseOutlined, SwitcherOutlined } from '@ant-design/icons';
 
@@ -10,8 +9,6 @@ interface CollectionDocumentsProps {
   collectionIdKey: string;
 }
 export const CollectionDocuments: React.FC<CollectionDocumentsProps> = (props) => {
-  const { t } = useTranslation();
-
   const collectionIdKey = props.collectionIdKey;
   const documents = props.documents;
   const treeData: DataNode[] = documents
