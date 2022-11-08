@@ -40,12 +40,14 @@ export const CreateCollectionForm: React.FC<CreateCollectionFormProps> = (props)
     setLoading(true);
     setTimeout(() => {
       setLoading(false);
-      const collectionAttribtues =attributes? attributes.map((a) => {
-        return {
-          name: a.attributeName,
-          type: a.attributeType,
-        };
-      }):[];
+      const collectionAttribtues = attributes
+        ? attributes.map((a) => {
+            return {
+              name: a.attributeName,
+              type: a.attributeType,
+            };
+          })
+        : [];
       createCollection({
         name: collectionName,
         orderingKey: orderingKey,

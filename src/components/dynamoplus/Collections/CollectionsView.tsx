@@ -143,7 +143,7 @@ export const CollectionsView: React.FC = () => {
             >
               {t('dynamoplus.collection.create')}
             </Button>
-            <Button type="primary" icon={<ReloadOutlined />} size="small">
+            <Button type="primary" icon={<ReloadOutlined />} size="small" onClick={() => fetch()}>
               {t('dynamoplus.collection.refresh')}
             </Button>
           </S.ButtonGroup>
