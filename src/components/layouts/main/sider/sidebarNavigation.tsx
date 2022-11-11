@@ -1,5 +1,5 @@
 import React from 'react';
-import { HomeOutlined, DatabaseOutlined } from '@ant-design/icons';
+import { HomeOutlined, DatabaseOutlined, PoweroffOutlined } from '@ant-design/icons';
 
 export interface SidebarNavigationItem {
   title: string;
@@ -20,5 +20,11 @@ export const sidebarNavigation: SidebarNavigationItem[] = [
     key: 'collections',
     icon: <DatabaseOutlined />,
     url: '/dynamoplus/collections',
+  },
+  {
+    title: 'common.logout',
+    key: 'logout',
+    icon: <PoweroffOutlined />,
+    url: '/logout',
   },
 ];
