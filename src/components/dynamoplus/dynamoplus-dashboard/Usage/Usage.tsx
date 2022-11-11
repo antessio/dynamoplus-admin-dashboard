@@ -10,6 +10,7 @@ import {
 import { Col, Row } from 'antd/lib/grid';
 import { UsageCard } from './UsageCard/UsageCard';
 import { DatabaseOutlined, FileSearchOutlined, LaptopOutlined } from '@ant-design/icons';
+import { UsageChart } from './UsageChart';
 
 export const Usage: React.FC = () => {
   // const [data,setData] = useState<ChartData>([0,0,0]);
@@ -24,7 +25,7 @@ export const Usage: React.FC = () => {
   const { t } = useTranslation();
 
   return (
-    <UsageCardStyled id="activity" title={t('dynamoplus.usage.title')} padding={0}>
+    <UsageCardStyled id="activity" title={t('dynamoplus.usage.title')} padding={100}>
       <Row gutter={[30, 30]}>
         <Col id={'collection-count'} xs={12} md={8}>
           <UsageCard

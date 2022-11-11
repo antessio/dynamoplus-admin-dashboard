@@ -16,11 +16,12 @@ const DynamoplusDashboardPage: React.FC = () => {
       <Col span={24}>
         <Usage />
       </Col>
-      <Col span={24}>
+      {/* <Col span={24}>
+        
         <S.ScrollWrapper id="collection">
           <CollectionsCard />
         </S.ScrollWrapper>
-      </Col>
+      </Col> */}
     </Row>
   );
 
@@ -29,16 +30,17 @@ const DynamoplusDashboardPage: React.FC = () => {
       <Col span={24}>
         <Usage />
       </Col>
-      <Col span={24}>
+      {/* <Col span={24}>
         <CollectionsCard />
-      </Col>
+      </Col> */}
     </Row>
   );
 
   return (
     <>
       <PageTitle>DynamoPlus</PageTitle>
-      {isDesktop ? desktopLayout : mobileAndTabletLayout}
+      {/* {isDesktop ? desktopLayout : mobileAndTabletLayout} */}
+      <Usage />
     </>
   );
 };

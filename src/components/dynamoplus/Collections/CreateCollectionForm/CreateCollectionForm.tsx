@@ -68,35 +68,31 @@ export const CreateCollectionForm: React.FC<CreateCollectionFormProps> = (props)
   ];
 
   return (
-    <BaseButtonsForm
-      form={form}
-      isFieldsChanged={false}
-      name="dynamicForm"
-      loading={isLoading}
-      onFinish={onFinish}
-      autoComplete="off"
+    <Modal
+      title={t('dynamoplus.collection.createForm.title')}
+      centered
+      visible={isModalVisible}
+      onCancel={() => {
+        onCancel();
+        form.resetFields();
+      }}
+      size="large"
+      okText={t('dynamoplus.collection.createForm.submit')}
+      onOk={() => {
+        form.validateFields();
+        onFinish(form.getFieldsValue());
+        form.resetFields();
+        onSubmit();
+      }}
+      cancelText={t('dynamoplus.collection.createForm.cancel')}
     >
-      <Modal
-        title={t('dynamoplus.collection.modals.createCollection.title')}
-        centered
-        visible={isModalVisible}
-        onCancel={() => onCancel()}
-        size="large"
-        footer={[
-          <Button key="back" onClick={() => onCancel()}>
-            {t('dynamoplus.collection.modals.createCollection.cancel')}
-          </Button>,
-          <Button
-            key="ok"
-            onClick={() => {
-              onFinish(form.getFieldsValue());
-              form.resetFields();
-              onSubmit();
-            }}
-          >
-            {t('dynamoplus.collection.modals.createCollection.submit')}
-          </Button>,
-        ]}
+      <BaseButtonsForm
+        form={form}
+        isFieldsChanged={false}
+        name="dynamicForm"
+        loading={isLoading}
+        onFinish={onFinish}
+        autoComplete="off"
       >
         <BaseButtonsForm.Item
           label={t('dynamoplus.collection.createForm.collectionName')}
@@ -175,7 +171,7 @@ export const CreateCollectionForm: React.FC<CreateCollectionFormProps> = (props)
             </>
           )}
         </BaseButtonsForm.List>
-      </Modal>
-    </BaseButtonsForm>
+      </BaseButtonsForm>
+    </Modal>
   );
 };

@@ -11,13 +11,14 @@ import {
   getIndexesByCollection,
   Index,
 } from '@app/api/dynamoplus/mocks/system.api';
-import { Col, Row } from 'antd';
+import { Button, Col, Row } from 'antd';
 import * as S from './DynamoPlusPages.style';
 import { CollectionsIndexes } from '@app/components/dynamoplus/Collections/detail/CollectionIndexes';
 import { useResponsive } from '@app/hooks/useResponsive';
 import { CollectionDocuments } from '@app/components/dynamoplus/Collections/detail/CollectionDocuments';
 import { Space } from '../DashboardPage.styles';
 import { Card } from '@app/components/common/Card/Card';
+import { ReloadOutlined } from '@ant-design/icons';
 const CollectionDetailPage: React.FC = () => {
   const { name } = useParams();
   const [collection, setCollection] = useState<CollectionData>();
@@ -46,6 +47,27 @@ const CollectionDetailPage: React.FC = () => {
       <Col span={16}>
         <Card title={t('dynamoplus.collection.description')}>
           <S.ScrollWrapper id="collection-metadata">
+            <Button
+              type="primary"
+              icon={<ReloadOutlined />}
+              size="small"
+              onClick={() => () => {
+                if (!name) {
+                  return;
+                }
+                getCollection(name).then((res) => {
+                  setCollection(res);
+                  getIndexesByCollection(name).then((indexesRes) => {
+                    setIndexes(indexesRes);
+                  });
+                  getDocumentsByCollection(name).then((docRes) => {
+                    setDocuments(docRes);
+                  });
+                });
+              }}
+            >
+              {t('dynamoplus.collection.refresh')}
+            </Button>
             {/* <S.Title>{t('dynamoplus.collection.description')}</S.Title> */}
             {collection && <CollectionsDetails collection={collection} />}
           </S.ScrollWrapper>
@@ -55,7 +77,7 @@ const CollectionDetailPage: React.FC = () => {
         <Card title={t('dynamoplus.collection.indexes_description')}>
           <S.ScrollWrapper id="index-metadata">
             {/* <S.Title>{t('dynamoplus.collection.indexes_description')}</S.Title> */}
-            {indexes && <CollectionsIndexes indexes={indexes} />}
+            {indexes && collection && <CollectionsIndexes indexes={indexes} collection={collection} />}
           </S.ScrollWrapper>
         </Card>
       </Col>

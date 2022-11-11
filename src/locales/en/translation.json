@@ -12,7 +12,20 @@
         "name": "Name",
         "ordering_key" : "Ordering Key",
         "index_configuration": "Configuration",
-        "conditions": "Conditions"
+        "conditions": "Conditions",
+        "create": "Create index",
+        "createForm":{
+            "indexConfigurationError": "Mandatory. Use one of the selected values",
+            "conditionsTypeError": "Mandatory. Use at least one of the selected values",
+            "addAttribute": "Add new"
+        },
+        "modals":{
+            "createIndex": {
+                "title": "Create new index",
+                "cancel": "Cancel",
+                "submit": "Submit"
+            }
+        }
     },
     "collection":{
         "create": "Create",
@@ -26,7 +39,16 @@
         "id_key": "ID Key",
         "ordering_key": "Ordering Key",
         "attributes": "Attributes",
-        "show_more": "Show more"
+        "show_more": "Show more",
+        "createForm":{
+            "title": "Create New Collection",
+            "collectionName": "Collection Name",
+            "idKey": "Collection ID Key",
+            "orderingKey": "Collection ordering key",
+            "addAttribute": "New Attribute",
+            "cancel": "Cancel",
+            "submit": "Submit"
+        }
     }
 },
   "alerts": {

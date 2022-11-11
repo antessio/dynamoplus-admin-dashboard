@@ -30,28 +30,28 @@ export class CollectionAttribute {
 }
 
 export class Index {
-  name: string;
+  name?: string;
   collection: Collection;
   conditions: string[];
   configuration: IndexConfigurationType;
-  ordering_key?: string;
+  orderingKey?: string;
 
   constructor(
-    name: string,
     collection: Collection,
     conditions: string[],
     configuration: IndexConfigurationType,
     ordering_key?: string,
+    name?: string,
   ) {
     this.name = name;
     this.collection = collection;
     this.conditions = conditions;
     this.configuration = configuration;
-    this.ordering_key = ordering_key;
+    this.orderingKey = ordering_key;
   }
 }
 
-enum IndexConfigurationType {
+export enum IndexConfigurationType {
   OPTIMIZE_READ = 'OPTIMIZE_READ',
   OPTIMIZE_WRITE = 'OPTIMIZE_WRITE',
 }
@@ -185,15 +185,49 @@ const collections: Collection[] = [
   },
 ];
 
+const indexes = [
+  {
+    name: 'book_author',
+    collection: new Collection('book'),
+    conditions: ['author'],
+    configuration: IndexConfigurationType.OPTIMIZE_READ,
+  },
+  {
+    name: 'book_genre',
+    collection: new Collection('book'),
+    conditions: ['genre'],
+    configuration: IndexConfigurationType.OPTIMIZE_WRITE,
+    ordering_key: 'published_date',
+  },
+  {
+    name: 'book_published_date',
+    collection: new Collection('book'),
+    conditions: ['published_date'],
+    configuration: IndexConfigurationType.OPTIMIZE_READ,
+  },
+  {
+    name: 'restaurant_type',
+    collection: new Collection('restaurant'),
+    conditions: ['type'],
+    configuration: IndexConfigurationType.OPTIMIZE_READ,
+  },
+  {
+    name: 'restaurant_city',
+    collection: new Collection('restaurant'),
+    conditions: ['city'],
+    configuration: IndexConfigurationType.OPTIMIZE_WRITE,
+  },
+];
+
 export const getCollectionsCount = (): Promise<number> => {
   return new Promise((res) => {
-    res(10);
+    res(collections.length);
   });
 };
 
 export const getIndexesCount = (): Promise<number> => {
   return new Promise((res) => {
-    res(30);
+    res(indexes.length);
   });
 };
 
@@ -320,39 +354,7 @@ export const getFakeDocuments = (collection_name: string): any[] => {
   return [];
 };
 export const getFakeIndexes = (): Index[] => {
-  return [
-    {
-      name: 'book_author',
-      collection: new Collection('book'),
-      conditions: ['author'],
-      configuration: IndexConfigurationType.OPTIMIZE_READ,
-    },
-    {
-      name: 'book_genre',
-      collection: new Collection('book'),
-      conditions: ['genre'],
-      configuration: IndexConfigurationType.OPTIMIZE_WRITE,
-      ordering_key: 'published_date',
-    },
-    {
-      name: 'book_published_date',
-      collection: new Collection('book'),
-      conditions: ['published_date'],
-      configuration: IndexConfigurationType.OPTIMIZE_READ,
-    },
-    {
-      name: 'restaurant_type',
-      collection: new Collection('restaurant'),
-      conditions: ['type'],
-      configuration: IndexConfigurationType.OPTIMIZE_READ,
-    },
-    {
-      name: 'restaurant_city',
-      collection: new Collection('restaurant'),
-      conditions: ['city'],
-      configuration: IndexConfigurationType.OPTIMIZE_WRITE,
-    },
-  ];
+  return [...indexes];
 };
 export const getFakeCollections = (limit?: number, startingFrom?: string): Collection[] => {
   let result = [...collections];
@@ -387,5 +389,18 @@ export const createCollection = (collection: Collection): Promise<Collection> =>
   return new Promise((res) => {
     collections.push(collection);
     res(collection);
+  });
+};
+
+export const createIndex = (index: Index): Promise<Index> => {
+  return new Promise((res) => {
+    indexes.push({
+      collection: index.collection,
+      configuration: index.configuration,
+      conditions: index.conditions,
+      ordering_key: index.orderingKey,
+      name: index.name || index.collection.name + ' _' + index.orderingKey + ' ' + index.conditions.join('_')
+    });
+    res(index);
   });
 };

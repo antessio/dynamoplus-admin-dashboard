@@ -19,7 +19,7 @@ import {
 import { ColumnsType } from 'antd/es/table';
 import { Link } from 'react-router-dom';
 import { Card } from '@app/components/common/Card/Card';
-import { CreateCollectionForm } from './CreateForm/CreateCollectionForm';
+import { CreateCollectionForm } from './CreateCollectionForm/CreateCollectionForm';
 
 export const CollectionsView: React.FC = () => {
   const [tableData, setTableData] = useState<{ data: CollectionTableRow[]; hasMore: boolean; loading: boolean }>({
