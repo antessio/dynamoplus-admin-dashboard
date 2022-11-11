@@ -3,18 +3,12 @@ import { Col, Row } from 'antd';
 import { useTranslation } from 'react-i18next';
 import { PlusOutlined } from '@ant-design/icons';
 import { BaseButtonsForm } from '@app/components/common/forms/BaseButtonsForm/BaseButtonsForm';
-import { Input } from '@app/components/common/inputs/Input/Input';
 import { Select, Option } from '@app/components/common/selects/Select/Select';
 import { Button } from '@app/components/common/buttons/Button/Button';
 import { notificationController } from '@app/controllers/notificationController';
 import * as S from './CreateIndexForm.styles';
 import { Modal } from '@app/components/common/Modal/Modal';
-import {
-  createIndex,
-  IndexConfigurationType,
-  CollectionAttributeType,
-  getCollection,
-} from '@app/api/dynamoplus/mocks/system.api';
+import { createIndex, IndexConfigurationType, CollectionAttributeType } from '@app/api/dynamoplus/mocks/system.api';
 
 interface CreateIndexFormProps {
   isVisible: boolean;

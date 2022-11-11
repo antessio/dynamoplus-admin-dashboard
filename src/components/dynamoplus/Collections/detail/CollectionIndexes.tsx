@@ -20,24 +20,24 @@ export const CollectionsIndexes: React.FC<CollectionsIndexesProps> = (props) => 
   const { t } = useTranslation();
   return (
     <>
-    {collection && (
-              <CreateIndexForm
-                isVisible={isCreateModalVisible}
-                onSubmitted={() => {
-                  setIsCreateModalVisible(false);
-                }}
-                collectionName={collection.name}
-                collectionAttributes={
-                  collection.attributes?.map((a) => {
-                    return {
-                      attributeName: a.name,
-                      attributeType: a.type,
-                    };
-                  }) || []
-                }
-                onCanceled={() => setIsCreateModalVisible(false)}
-              />
-            )}
+      {collection && (
+        <CreateIndexForm
+          isVisible={isCreateModalVisible}
+          onSubmitted={() => {
+            setIsCreateModalVisible(false);
+          }}
+          collectionName={collection.name}
+          collectionAttributes={
+            collection.attributes?.map((a) => {
+              return {
+                attributeName: a.name,
+                attributeType: a.type,
+              };
+            }) || []
+          }
+          onCanceled={() => setIsCreateModalVisible(false)}
+        />
+      )}
       <S.ButtonGroup>
         <Button
           type="primary"
@@ -52,28 +52,28 @@ export const CollectionsIndexes: React.FC<CollectionsIndexesProps> = (props) => 
       </S.ButtonGroup>
       {indexes.map((i) => {
         return (
-            <Descriptions key={i.name} title={i.name} bordered layout="vertical" size="small">
-              <Descriptions.Item
-                label={t('dynamoplus.index.index_configuration')}
-                style={{ backgroundColor: 'transparent' }}
-              >
-                <S.Title>{i.configuration}</S.Title>
-              </Descriptions.Item>
-              <Descriptions.Item
-                label={t('dynamoplus.index.index_configuration')}
-                style={{ backgroundColor: 'transparent' }}
-              >
-                <S.Title>{i.configuration}</S.Title>
-              </Descriptions.Item>
-              <Descriptions.Item label={t('dynamoplus.index.ordering_key')} style={{ backgroundColor: 'transparent' }}>
-                <S.Title>{i.orderingKey}</S.Title>
-              </Descriptions.Item>
-              <Descriptions.Item label={t('dynamoplus.index.conditions')} style={{ backgroundColor: 'transparent' }}>
-                {i.conditions.map((c) => (
-                  <S.Title key={c}>{c}</S.Title>
-                ))}
-              </Descriptions.Item>
-            </Descriptions>
+          <Descriptions key={i.name} title={i.name} bordered layout="vertical" size="small">
+            <Descriptions.Item
+              label={t('dynamoplus.index.index_configuration')}
+              style={{ backgroundColor: 'transparent' }}
+            >
+              <S.Title>{i.configuration}</S.Title>
+            </Descriptions.Item>
+            <Descriptions.Item
+              label={t('dynamoplus.index.index_configuration')}
+              style={{ backgroundColor: 'transparent' }}
+            >
+              <S.Title>{i.configuration}</S.Title>
+            </Descriptions.Item>
+            <Descriptions.Item label={t('dynamoplus.index.ordering_key')} style={{ backgroundColor: 'transparent' }}>
+              <S.Title>{i.orderingKey}</S.Title>
+            </Descriptions.Item>
+            <Descriptions.Item label={t('dynamoplus.index.conditions')} style={{ backgroundColor: 'transparent' }}>
+              {i.conditions.map((c) => (
+                <S.Title key={c}>{c}</S.Title>
+              ))}
+            </Descriptions.Item>
+          </Descriptions>
         );
       })}
       <Space />

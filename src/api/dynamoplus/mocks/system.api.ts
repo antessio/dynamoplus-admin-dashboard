@@ -399,7 +399,7 @@ export const createIndex = (index: Index): Promise<Index> => {
       configuration: index.configuration,
       conditions: index.conditions,
       ordering_key: index.orderingKey,
-      name: index.name || index.collection.name + ' _' + index.orderingKey + ' ' + index.conditions.join('_')
+      name: index.name || index.collection.name + ' _' + index.orderingKey + ' ' + index.conditions.join('_'),
     });
     res(index);
   });

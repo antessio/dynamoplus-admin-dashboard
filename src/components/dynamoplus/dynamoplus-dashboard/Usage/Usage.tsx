@@ -10,7 +10,6 @@ import {
 import { Col, Row } from 'antd/lib/grid';
 import { UsageCard } from './UsageCard/UsageCard';
 import { DatabaseOutlined, FileSearchOutlined, LaptopOutlined } from '@ant-design/icons';
-import { UsageChart } from './UsageChart';
 
 export const Usage: React.FC = () => {
   // const [data,setData] = useState<ChartData>([0,0,0]);
