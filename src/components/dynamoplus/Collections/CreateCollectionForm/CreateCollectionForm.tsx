@@ -41,12 +41,15 @@ export const CreateCollectionForm: React.FC<CreateCollectionFormProps> = (props)
     setTimeout(() => {
       setLoading(false);
       const collectionAttribtues = attributes
-        ? attributes.map((a) => {
-            return {
-              name: a.attributeName,
-              type: a.attributeType,
-            };
-          })
+        ? attributes
+            .filter((a) => a != undefined)
+            .filter((a) => a.attributeName && a.attributeType)
+            .map((a) => {
+              return {
+                name: a.attributeName,
+                type: a.attributeType,
+              };
+            })
         : [];
       createCollection({
         name: collectionName,
@@ -128,7 +131,7 @@ export const CreateCollectionForm: React.FC<CreateCollectionFormProps> = (props)
                       {() => (
                         <BaseButtonsForm.Item
                           {...field}
-                          label={t('dynamoplus.collection.createForm.attributes')}
+                          label={t('dynamoplus.collection.createForm.attributeTypes')}
                           name={[field.name, 'attributeType']}
                           fieldKey={[field.key, 'attributeType']}
                           rules={[
@@ -149,7 +152,7 @@ export const CreateCollectionForm: React.FC<CreateCollectionFormProps> = (props)
                   <Col span={12}>
                     <BaseButtonsForm.Item
                       {...field}
-                      label={t('dynamoplus.collection.createForm.attributes')}
+                      label={t('dynamoplus.collection.createForm.attributeNames')}
                       name={[field.name, 'attributeName']}
                       fieldKey={[field.key, 'attributeName']}
                       rules={[{ required: true, message: t('dynamoplus.collection.createForm.attributeNameError') }]}
@@ -162,7 +165,6 @@ export const CreateCollectionForm: React.FC<CreateCollectionFormProps> = (props)
                   </Col>
                 </Row>
               ))}
-
               <BaseButtonsForm.Item>
                 <Button type="dashed" onClick={() => add()} block icon={<PlusOutlined />}>
                   {t('dynamoplus.collection.createForm.addAttribute')}

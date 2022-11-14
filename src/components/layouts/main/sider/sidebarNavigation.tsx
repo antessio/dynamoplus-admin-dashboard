@@ -19,7 +19,7 @@ export const sidebarNavigation: SidebarNavigationItem[] = [
     title: 'dynamoplus.common.collection',
     key: 'collections',
     icon: <DatabaseOutlined />,
-    url: '/dynamoplus/collections',
+    url: '/collections',
   },
   {
     title: 'common.logout',

@@ -9,7 +9,7 @@ export const CollectionItemItem: React.FC<Collection> = ({ name }) => {
     <Row gutter={[10, 20]} align={'middle'}>
       <Col span={10}>
         <Button type="link" icon={<SearchOutlined />}>
-          <Link to={'/dynamoplus/collections/' + name}>{name}</Link>
+          <Link to={'/collections/' + name}>{name}</Link>
         </Button>
       </Col>
     </Row>

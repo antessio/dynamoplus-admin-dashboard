@@ -89,7 +89,7 @@ export const CollectionsView: React.FC = () => {
         return (
           <Space>
             <Tooltip title={t('dynamoplus.collection.documents')}>
-              <Link to={'/dynamoplus/collections/' + record.name}>
+              <Link to={'/collections/' + record.name}>
                 <Button type="ghost" icon={<SearchOutlined />} />
               </Link>
             </Tooltip>

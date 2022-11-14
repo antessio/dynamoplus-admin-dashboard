@@ -3,7 +3,8 @@
     "common": {
         "collection": "Collection",
         "index": "Index",
-        "client_authorization": "Client Authorization"
+        "client_authorization": "Client Authorization",
+        "logout": "Log Out"
     },
     "usage":{
         "title": "Usage"
@@ -47,7 +48,11 @@
             "orderingKey": "Collection ordering key",
             "addAttribute": "New Attribute",
             "cancel": "Cancel",
-            "submit": "Submit"
+            "submit": "Submit",
+            "attributeTypes": "Type",
+            "attributeNames": "Name"
+
+
         }
     }
 },
@@ -286,7 +291,8 @@
       "verifyEmailPage": "Verify email page",
       "warning": "Warning",
       "zipcode": "Zipcode",
-      "delete":"Delete"
+      "delete":"Delete",
+      "logout": "Log Out"
   },
   "medical-dashboard": {
       "activity": {

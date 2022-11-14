@@ -35,7 +35,7 @@ export const CollectionsCard: React.FC = () => {
         </S.ActivityRow>
       </S.Wrapper>
       <Button type="link">
-        <Link to={'/dynamoplus/collections/'}>{t('dynamoplus.collection.show_more')}</Link>
+        <Link to={'/collections/'}>{t('dynamoplus.collection.show_more')}</Link>
       </Button>
     </Card>
   );
